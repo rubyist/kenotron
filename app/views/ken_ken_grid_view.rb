@@ -6,9 +6,9 @@ class KenKenGridView < UIView
     grid_width = size * 98 + 8.0
     grid_height = grid_width
     
-    self.initWithFrame(CGRect.make(x:90, y:90, width:grid_width, height:grid_height))
+    self.initWithFrame(CGRect.make(x:0, y:0, width:grid_width, height:grid_height))
     self.backgroundColor = '#dddbba'.to_color
-    
+
     @cells = []
     @cages = []
     
