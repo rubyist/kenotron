@@ -19,6 +19,7 @@ class NumOpController < UIViewController
     @number.enablesReturnKeyAutomatically = true
     @number.returnKeyType = UIReturnKeyDone
     @number.autocapitalizationType = UITextAutocapitalizationTypeNone
+    @number.becomeFirstResponder
     
     @operation = UISegmentedControl.alloc.initWithItems(operation_segments)
     @operation.addTarget(self, action:"set_operation", forControlEvents:UIControlEventValueChanged)
