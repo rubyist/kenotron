@@ -8,4 +8,5 @@ Motion::Project::App.setup do |app|
   # Use `rake config' to see complete project settings.
   app.name = 'Kenotron'
   app.device_family = :ipad
+  app.fonts = ["Lato.ttf"]
 end

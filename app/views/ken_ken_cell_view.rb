@@ -12,9 +12,13 @@ class KenKenCellView < UIView
     
     self.backgroundColor = UIColor.clearColor
     self.userInteractionEnabled = false
-    
-    @num_op_label = UILabel.alloc.initWithFrame(CGRect.make(x: 7, y: 5, width: 60, height: 14))
+
+    lato18 = UIFont.fontWithName("Lato", size: 18)
+
+    @num_op_label = UILabel.alloc.initWithFrame(CGRect.make(x: 7, y: 8, width: 60, height: 14))
+    @num_op_label.font = lato18
     @num_op_label.text = ""
+    @num_op_label.textColor = '#7b858e'.to_color
     @num_op_label.backgroundColor = UIColor.clearColor
     self.addSubview(@num_op_label)
 
