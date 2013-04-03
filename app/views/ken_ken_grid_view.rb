@@ -91,11 +91,40 @@ class KenKenGridView < UIView
     @cages << @touchedCells
     
     # Pop up the big question
+    snvc = NumOpController.alloc.initWithCageCount(@touchedCells.count)
+    if UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad
+      @popover = UIPopoverController.alloc.initWithContentViewController(snvc)
+      snvc.parent = self
+      @popover.setPopoverContentSize(snvc.view.frame.size)
+      @popover.delegate = self
+      @popover.presentPopoverFromRect(@touchedCells.last.frame, inView:self, permittedArrowDirections:UIPopoverArrowDirectionAny, animated:true)
+    end
     
     # Ensure cages are drawn
     @touchedCells.each(&:deselect)
     setNeedsDisplay
 
     # TODO: Invalidate any cages we're draing over with this cage
+  end
+  
+  def set_number_operation(number, operation)
+    @popover.dismissPopoverAnimated(true)
+    
+    northwest_cell = northwest_cell_of_cage(@touchedCells)
+    if operation == "="
+      northwest_cell.set_num_op("#{number}")
+    else
+      northwest_cell.set_num_op("#{number} #{operation}")
+    end
+    
+    @touchedCells = []
+  end
+  
+  def northwest_cell_of_cage(cage)
+    cage_points = cage.map(&:frame)
+    min_y_value = cage_points.min_by(&:y).y
+    min_y_points = cage_points.select {|p| p.y == min_y_value}
+    northwest_point = min_y_points.min_by(&:x)
+    cage[cage_points.index(northwest_point)]    
   end
 end

@@ -10,8 +10,13 @@ class KenKenCellView < UIView
     
     @selected = false
     
-    self.backgroundColor = UIColor.clearColor #DeselectedColor
+    self.backgroundColor = UIColor.clearColor
     self.userInteractionEnabled = false
+    
+    @num_op_label = UILabel.alloc.initWithFrame(CGRect.make(x: 7, y: 5, width: 60, height: 14))
+    @num_op_label.text = ""
+    @num_op_label.backgroundColor = UIColor.clearColor
+    self.addSubview(@num_op_label)
 
     self
   end
@@ -32,6 +37,10 @@ class KenKenCellView < UIView
     CGContextFillRect(context, CGRect.make(x:BorderSize, y:BorderSize, width:cell_width, height:cell_height))
 
     CGContextRestoreGState(context)
+  end
+  
+  def set_num_op(num_op)
+    @num_op_label.text = num_op
   end
 
   def select
