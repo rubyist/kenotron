@@ -19,6 +19,7 @@ class NumOpController < UIViewController
     @number.enablesReturnKeyAutomatically = true
     @number.returnKeyType = UIReturnKeyDone
     @number.autocapitalizationType = UITextAutocapitalizationTypeNone
+    @number.keyboardType = UIKeyboardTypeNumberPad
     @number.becomeFirstResponder
     
     @operation = UISegmentedControl.alloc.initWithItems(operation_segments)
