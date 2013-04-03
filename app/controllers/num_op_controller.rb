@@ -11,7 +11,7 @@ class NumOpController < UIViewController
   def viewDidLoad
     super
     
-    view.frame = CGRect.make(x: 0, y: 0, width: 320, height: 140)
+    view.frame = CGRect.make(x: 0, y: 0, width: 200, height: 140)
     view.backgroundColor = UIColor.whiteColor
     
     @number = UITextField.alloc.initWithFrame(CGRectZero)
@@ -27,9 +27,9 @@ class NumOpController < UIViewController
     Motion::Layout.new do |layout|
       layout.view view
       layout.subviews "number" => @number, "operation" => @operation
-      layout.metrics "top" => 20, "margin" => 20, "height" => 40
-      layout.vertical "|-top-[number(==height)]-margin-[operation]"
-      layout.horizontal "|-margin-[number]-margin-|"
+      layout.metrics "top" => 20, "margin" => 20
+      layout.vertical "|-top-[number]-margin-[operation]"
+      layout.horizontal "|-(>=margin)-[number(==operation)]-(>=margin)-|"
       layout.horizontal "|-margin-[operation]-margin-|"
     end
   end
