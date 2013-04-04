@@ -22,5 +22,11 @@ class KenKenDesignerController < UIViewController
   
   def solve_puzzle
     puts "Let's solve it!"
+    puts @grid_view.string_for_solver
+    puzzle = KenKen::Puzzle.new(@grid_view.string_for_solver)
+    solved = KenKen::solve(puzzle)
+    solved.instance_variable_get('@grid').each_with_index do |number, index|
+      @grid_view.cells[index].set_number(number.to_s)
+    end
   end
 end

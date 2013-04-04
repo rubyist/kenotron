@@ -1,4 +1,5 @@
 class KenKenGridView < UIView
+  attr_accessor :size
   attr_accessor :cells
   attr_accessor :cages
   
@@ -9,6 +10,7 @@ class KenKenGridView < UIView
     self.initWithFrame(CGRect.make(x:0, y:0, width:grid_width, height:grid_height))
     self.backgroundColor = '#dddbba'.to_color
 
+    @size = size
     @cells = []
     @cages = []
     
@@ -16,11 +18,14 @@ class KenKenGridView < UIView
     cell_height = cell_width
     
     main_rect = CGRect.make(x:4.0, y:4.0, width:cell_width, height:cell_height)
-    
+
+    cell_index = 0
     size.times do |n|
       size.times do |m|
         cell = KenKenCellView.alloc.initWithFrame(main_rect)
         cell.grid = self
+        cell.cell_index = cell_index
+        cell_index += 1
         self.addSubview(cell)
         
         cells << cell
@@ -44,8 +49,7 @@ class KenKenGridView < UIView
 
 
     @cages.each do |cage|
-      cage_map = CageManager.cageToPoints(cage)
-      cage_map[:border_points].each do |points|
+      cage.border_points.each do |points|
         if points[0].y == points[1].y # Horizontal line
           CGContextMoveToPoint(context, points[0].x - 4, points[0].y)
           CGContextAddLineToPoint(context, points[1].x + 4, points[1].y)
@@ -88,8 +92,7 @@ class KenKenGridView < UIView
   
   def touchesEnded(touches, withEvent:event)
     return if @touchedCells.count == 0
-    @cages << @touchedCells
-    
+
     # Pop up the big question
     snvc = NumOpController.alloc.initWithCageCount(@touchedCells.count)
     if UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad
@@ -100,9 +103,6 @@ class KenKenGridView < UIView
       @popover.presentPopoverFromRect(@touchedCells.last.frame, inView:self, permittedArrowDirections:UIPopoverArrowDirectionAny, animated:true)
     end
     
-    # Ensure cages are drawn
-    @touchedCells.each(&:deselect)
-    setNeedsDisplay
 
     # TODO: Invalidate any cages we're draing over with this cage
   end
@@ -116,7 +116,13 @@ class KenKenGridView < UIView
     else
       northwest_cell.set_num_op("#{number} #{operation}")
     end
-    
+
+    @cages << KenKenCage.new(number, operation, @touchedCells)
+
+    # Ensure cages are drawn
+    @touchedCells.each(&:deselect)
+    setNeedsDisplay
+
     @touchedCells = []
   end
   
@@ -126,5 +132,9 @@ class KenKenGridView < UIView
     min_y_points = cage_points.select {|p| p.y == min_y_value}
     northwest_point = min_y_points.min_by(&:x)
     cage[cage_points.index(northwest_point)]    
+  end
+
+  def string_for_solver
+    "#{@size} #{@cages.map(&:solver_string).join(' ')}"
   end
 end
