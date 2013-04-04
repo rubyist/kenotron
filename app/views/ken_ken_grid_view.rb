@@ -4,9 +4,12 @@ class KenKenGridView < UIView
   attr_accessor :cages
   
   def initWithGridSize(size)
-    grid_width = size * 98 + 8.0
+    cell_width = 648.0 / size # 648 = max usable space in portrait with 40 margins
+    cell_width = [cell_width, 72.0, 98.0].sort[1] # Clamp cell width between 72 and 80
+
+    grid_width = (cell_width * size) + 8  # Cells plus borders
     grid_height = grid_width
-    
+
     self.initWithFrame(CGRect.make(x:0, y:0, width:grid_width, height:grid_height))
     self.backgroundColor = '#dddbba'.to_color
 
@@ -14,7 +17,6 @@ class KenKenGridView < UIView
     @cells = []
     @cages = []
     
-    cell_width = 98.0
     cell_height = cell_width
     
     main_rect = CGRect.make(x:4.0, y:4.0, width:cell_width, height:cell_height)
