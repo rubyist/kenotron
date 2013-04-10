@@ -3,7 +3,7 @@ class KenKenDesignerController < UIViewController
     super
     self.view.backgroundColor = UIColor.whiteColor
     
-    @grid_view = KenKenGridView.alloc.initWithGridSize(6)
+    @grid_view = KenKenGridView.alloc.initWithGridSize(4)
 
     @solve_button = UIButton.buttonWithType(UIButtonTypeRoundedRect)
     @solve_button.setTitle("Solve", forState:UIControlStateNormal)
@@ -22,11 +22,19 @@ class KenKenDesignerController < UIViewController
   end
   
   def solve_puzzle
-    puts @grid_view.string_for_solver
-    puzzle = KenKen::Puzzle.new(@grid_view.string_for_solver)
-    solved = KenKen::solve(puzzle)
-    solved.instance_variable_get('@grid').each_with_index do |number, index|
-      @grid_view.cells[index].set_number(number.to_s)
+    puts "Sovling puzzle"
+
+    start = Time.now
+    solution = NekNek.solve(NekNek::Puzzle.new(@grid_view.string_for_solver))
+    stop = Time.now
+
+    if solution
+      puts "Solved in #{stop - start} seconds"
+      solution.each do |cell, answer|
+        @grid_view.cells[cell].set_number(answer)
+      end
+    else
+      puts "Could not solve :("
     end
   end
 end

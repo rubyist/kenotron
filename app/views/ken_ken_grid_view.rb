@@ -14,23 +14,25 @@ class KenKenGridView < UIView
     self.backgroundColor = '#dddbba'.to_color
 
     @size = size
-    @cells = []
+    @cells = {}
     @cages = []
     
     cell_height = cell_width
     
     main_rect = CGRect.make(x:4.0, y:4.0, width:cell_width, height:cell_height)
 
+    alphabet = ('A'..'Z').to_a
+    numbers = (1..9).to_a
+
     cell_index = 0
     size.times do |n|
       size.times do |m|
         cell = KenKenCellView.alloc.initWithFrame(main_rect)
         cell.grid = self
-        cell.cell_index = cell_index
-        cell_index += 1
+        cell.cell_index = "#{alphabet[n]}#{numbers[m]}"
         self.addSubview(cell)
         
-        cells << cell
+        cells[cell.cell_index] = cell
         main_rect = main_rect.beside
       end
       main_rect = main_rect.below
@@ -68,12 +70,10 @@ class KenKenGridView < UIView
 
   def touchesBegan(touches, withEvent:event)
     @touchedCells = []
-    @cells.each do |cell|
-      cell.deselect
-    end
-    
+    @cells.values.each(&:deselect)
+
     touchPoint = touches.anyObject.locationInView(self)
-    @cells.each do |cell|
+    @cells.values.each do |cell|
       if cell.pointInside(convertPoint(touchPoint, toView:cell), withEvent:event)
         @touchedCells << cell unless @touchedCells.include?(cell)
         cell.select
@@ -84,7 +84,7 @@ class KenKenGridView < UIView
   def touchesMoved(touches, withEvent:event)
     touchPoint = touches.anyObject.locationInView(self)
     
-    @cells.each do |cell|
+    @cells.values.each do |cell|
       if cell.pointInside(convertPoint(touchPoint, toView:cell), withEvent:event)
         @touchedCells << cell unless @touchedCells.include?(cell)
         cell.select
@@ -137,6 +137,6 @@ class KenKenGridView < UIView
   end
 
   def string_for_solver
-    "#{@size} #{@cages.map(&:solver_string).join(' ')}"
+    "# #{@size}\n#{@cages.map(&:solver_string).join("\n")}"
   end
 end

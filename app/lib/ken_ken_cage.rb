@@ -41,7 +41,7 @@ class KenKenCage
   end
 
   def solver_string
-    "#{target}#{solver_operation} #{cells.map(&:cell_index).join(' ')} |"
+    "#{solver_operation} #{target} #{cells.map(&:cell_index).join(' ')}"
   end
 
   private
@@ -56,7 +56,7 @@ class KenKenCage
     when '÷'
       '/'
     when '='
-      '.'
+      '!'
     end
   end
 end
