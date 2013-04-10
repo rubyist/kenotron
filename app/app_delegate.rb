@@ -2,9 +2,9 @@ class AppDelegate
   def application(application, didFinishLaunchingWithOptions:launchOptions)
     @window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
     
-    @designer_controller = KenKenDesignerController.alloc.initWithNibName(nil, bundle:nil)
+    @designerController = KenKenDesignerController.alloc.initWithNibName(nil, bundle:nil)
     
-    @window.rootViewController = @designer_controller
+    @window.rootViewController = @designerController
     @window.makeKeyAndVisible
     
     true

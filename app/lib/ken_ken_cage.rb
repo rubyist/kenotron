@@ -9,30 +9,30 @@ class KenKenCage
     @cells = cells
   end
 
-  def border_points
+  def borderPoints
     points[:border_points]
   end
 
   def points
-    cage_points = []
+    cagePoints = []
     cells.map(&:frame).each do |rect|
 
       # Top
-      cage_points << [CGPoint.make(x: rect.x, y: rect.y), CGPoint.make(x: rect.x + rect.width, y: rect.y)]
+      cagePoints << [CGPoint.make(x: rect.x, y: rect.y), CGPoint.make(x: rect.x + rect.width, y: rect.y)]
 
       # Right
-      cage_points << [CGPoint.make(x: rect.x + rect.width, y: rect.y), CGPoint.make(x: rect.x + rect.width, y: rect.y + rect.height)]
+      cagePoints << [CGPoint.make(x: rect.x + rect.width, y: rect.y), CGPoint.make(x: rect.x + rect.width, y: rect.y + rect.height)]
 
       # Bottom
-      cage_points << [CGPoint.make(x: rect.x, y: rect.y + rect.height), CGPoint.make(x: rect.x + rect.width, y: rect.y + rect.height)]
+      cagePoints << [CGPoint.make(x: rect.x, y: rect.y + rect.height), CGPoint.make(x: rect.x + rect.width, y: rect.y + rect.height)]
 
       # Left
-      cage_points << [CGPoint.make(x: rect.x, y: rect.y), CGPoint.make(x: rect.x, y: rect.y + rect.height)]
+      cagePoints << [CGPoint.make(x: rect.x, y: rect.y), CGPoint.make(x: rect.x, y: rect.y + rect.height)]
 
     end
 
-    cage_inner_points = cage_points.select { |p| cage_points.count(p) >= 2 }.uniq
-    cage_border_points = (cage_points - cage_inner_points).uniq
+    cage_inner_points = cagePoints.select { |p| cagePoints.count(p) >= 2 }.uniq
+    cage_border_points = (cagePoints - cage_inner_points).uniq
 
     {
         inner_points: cage_inner_points,
@@ -40,12 +40,12 @@ class KenKenCage
     }
   end
 
-  def solver_string
-    "#{solver_operation} #{target} #{cells.map(&:cell_index).join(' ')}"
+  def solverString
+    "#{solverOperation} #{target} #{cells.map(&:cellIndex).join(' ')}"
   end
 
   private
-  def solver_operation
+  def solverOperation
     case operation
     when '+'
       '+'

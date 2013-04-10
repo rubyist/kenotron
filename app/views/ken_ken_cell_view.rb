@@ -1,6 +1,6 @@
 class KenKenCellView < UIView
   attr_accessor :grid
-  attr_accessor :cell_index
+  attr_accessor :cellIndex
 
   BorderSize      = 4.0
   DeselectedColor = '#e0dfd1'.to_color
@@ -16,29 +16,29 @@ class KenKenCellView < UIView
 
     lato18 = UIFont.fontWithName("Lato", size: 18)
 
-    @num_op_label = UILabel.alloc.initWithFrame(CGRect.make(x: 7, y: 8, width: 60, height: 14))
-    @num_op_label.font = lato18
-    @num_op_label.text = ""
-    @num_op_label.textColor = '#7b858e'.to_color
-    @num_op_label.backgroundColor = UIColor.clearColor
-    self.addSubview(@num_op_label)
+    @numOpLabel = UILabel.alloc.initWithFrame(CGRect.make(x: 7, y: 8, width: 60, height: 14))
+    @numOpLabel.font = lato18
+    @numOpLabel.text = ""
+    @numOpLabel.textColor = '#7b858e'.to_color
+    @numOpLabel.backgroundColor = UIColor.clearColor
+    self.addSubview(@numOpLabel)
 
     lato36 = UIFont.fontWithName("Lato", size: 36)
 
-    @number_label = UILabel.alloc.initWithFrame(CGRect.make(x:36, y:30, width: 40, height: 50))
-    @number_label.font = lato36
-    @number_label.text = ""
-    @number_label.textColor = "#323538".to_color
-    @number_label.backgroundColor = UIColor.clearColor
-    self.addSubview(@number_label)
+    @numberLabel = UILabel.alloc.initWithFrame(CGRect.make(x:36, y:30, width: 40, height: 50))
+    @numberLabel.font = lato36
+    @numberLabel.text = ""
+    @numberLabel.textColor = "#323538".to_color
+    @numberLabel.backgroundColor = UIColor.clearColor
+    self.addSubview(@numberLabel)
 
 
     self
   end
   
   def drawRect(rect)
-    cell_width = self.frame.width - (BorderSize * 2)
-    cell_height = cell_width
+    cellWidth = self.frame.width - (BorderSize * 2)
+    cellheight = cellWidth
 
     context = UIGraphicsGetCurrentContext()
     CGContextSaveGState(context)
@@ -49,17 +49,17 @@ class KenKenCellView < UIView
       CGContextSetFillColorWithColor(context, DeselectedColor.CGColor)
     end
 
-    CGContextFillRect(context, CGRect.make(x:BorderSize, y:BorderSize, width:cell_width, height:cell_height))
+    CGContextFillRect(context, CGRect.make(x:BorderSize, y:BorderSize, width:cellWidth, height:cellheight))
 
     CGContextRestoreGState(context)
   end
   
   def set_num_op(num_op)
-    @num_op_label.text = num_op
+    @numOpLabel.text = num_op
   end
 
-  def set_number(number)
-    @number_label.text = number.to_s
+  def setNumber(number)
+    @numberLabel.text = number.to_s
   end
 
   def select

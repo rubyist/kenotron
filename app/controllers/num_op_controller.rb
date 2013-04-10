@@ -1,9 +1,9 @@
 class NumOpController < UIViewController
   attr_accessor :parent
   
-  def initWithCageCount(cage_count)
+  def initWithCageCount(cageCount)
     self.initWithNibName(nil, bundle:nil)
-    @cage_count = cage_count
+    @cageCount = cageCount
     
     self
   end
@@ -37,14 +37,14 @@ class NumOpController < UIViewController
   
   def set_operation
     if @number.text.to_i > 0 # TODO Better verification?
-      parent.set_number_operation(@number.text.to_i, operation_segments[@operation.selectedSegmentIndex])
+      parent.setNumberOperation(@number.text.to_i, operation_segments[@operation.selectedSegmentIndex])
     else
       @operation.selectedSegmentIndex = UISegmentedControlNoSegment
     end
   end
   
   def operation_segments
-    case @cage_count
+    case @cageCount
     when 1
       ['=']
     when 2

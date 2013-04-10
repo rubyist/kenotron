@@ -4,22 +4,22 @@ class KenKenGridView < UIView
   attr_accessor :cages
   
   def initWithGridSize(size)
-    cell_width = 648.0 / size # 648 = max usable space in portrait with 40 margins
-    cell_width = [cell_width, 72.0, 98.0].sort[1] # Clamp cell width between 72 and 80
+    cellWidth = 648.0 / size # 648 = max usable space in portrait with 40 margins
+    cellWidth = [cellWidth, 72.0, 98.0].sort[1] # Clamp cell width between 72 and 80
 
-    grid_width = (cell_width * size) + 8  # Cells plus borders
-    grid_height = grid_width
+    gridWidth = (cellWidth * size) + 8  # Cells plus borders
+    gridHeight = gridWidth
 
-    self.initWithFrame(CGRect.make(x:0, y:0, width:grid_width, height:grid_height))
+    self.initWithFrame(CGRect.make(x:0, y:0, width:gridWidth, height:gridHeight))
     self.backgroundColor = '#dddbba'.to_color
 
     @size = size
     @cells = {}
     @cages = []
     
-    cell_height = cell_width
+    cellHeight = cellWidth
     
-    main_rect = CGRect.make(x:4.0, y:4.0, width:cell_width, height:cell_height)
+    mainRect = CGRect.make(x:4.0, y:4.0, width:cellWidth, height:cellHeight)
 
     alphabet = ('A'..'Z').to_a
     numbers = (1..9).to_a
@@ -27,16 +27,16 @@ class KenKenGridView < UIView
     cell_index = 0
     size.times do |n|
       size.times do |m|
-        cell = KenKenCellView.alloc.initWithFrame(main_rect)
+        cell = KenKenCellView.alloc.initWithFrame(mainRect)
         cell.grid = self
-        cell.cell_index = "#{alphabet[n]}#{numbers[m]}"
+        cell.cellIndex = "#{alphabet[n]}#{numbers[m]}"
         self.addSubview(cell)
         
-        cells[cell.cell_index] = cell
-        main_rect = main_rect.beside
+        cells[cell.cellIndex] = cell
+        mainRect = mainRect.beside
       end
-      main_rect = main_rect.below
-      main_rect.x = 4.0
+      mainRect = mainRect.below
+      mainRect.x = 4.0
     end
     
     self
@@ -53,7 +53,7 @@ class KenKenGridView < UIView
 
 
     @cages.each do |cage|
-      cage.border_points.each do |points|
+      cage.borderPoints.each do |points|
         if points[0].y == points[1].y # Horizontal line
           CGContextMoveToPoint(context, points[0].x - 4, points[0].y)
           CGContextAddLineToPoint(context, points[1].x + 4, points[1].y)
@@ -109,14 +109,14 @@ class KenKenGridView < UIView
     # TODO: Invalidate any cages we're draing over with this cage
   end
   
-  def set_number_operation(number, operation)
+  def setNumberOperation(number, operation)
     @popover.dismissPopoverAnimated(true)
     
-    northwest_cell = northwest_cell_of_cage(@touchedCells)
+    northwestCell = northwestCellOfCage(@touchedCells)
     if operation == "="
-      northwest_cell.set_num_op("#{number}")
+      northwestCell.set_num_op("#{number}")
     else
-      northwest_cell.set_num_op("#{number} #{operation}")
+      northwestCell.set_num_op("#{number} #{operation}")
     end
 
     @cages << KenKenCage.new(number, operation, @touchedCells)
@@ -128,7 +128,7 @@ class KenKenGridView < UIView
     @touchedCells = []
   end
   
-  def northwest_cell_of_cage(cage)
+  def northwestCellOfCage(cage)
     cage_points = cage.map(&:frame)
     min_y_value = cage_points.min_by(&:y).y
     min_y_points = cage_points.select {|p| p.y == min_y_value}
@@ -136,7 +136,7 @@ class KenKenGridView < UIView
     cage[cage_points.index(northwest_point)]    
   end
 
-  def string_for_solver
-    "# #{@size}\n#{@cages.map(&:solver_string).join("\n")}"
+  def stringForSolver
+    "# #{@size}\n#{@cages.map(&:solverString).join("\n")}"
   end
 end
