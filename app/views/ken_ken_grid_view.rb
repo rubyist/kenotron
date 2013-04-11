@@ -106,7 +106,7 @@ class KenKenGridView < UIView
     end
     
 
-    # TODO: Invalidate any cages we're draing over with this cage
+    # TODO: Invalidate any cages we're drawing over with this cage
   end
   
   def setNumberOperation(number, operation)
@@ -138,5 +138,11 @@ class KenKenGridView < UIView
 
   def stringForSolver
     "# #{@size}\n#{@cages.map(&:solverString).join("\n")}"
+  end
+
+  def reset
+    @cells.values.each(&:reset)
+    @cages = []
+    setNeedsDisplay
   end
 end

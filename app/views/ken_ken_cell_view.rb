@@ -71,4 +71,9 @@ class KenKenCellView < UIView
     @selected = false
     setNeedsDisplay
   end
+
+  def reset
+    @numOpLabel.text = ""
+    @numberLabel.text = ""
+  end
 end

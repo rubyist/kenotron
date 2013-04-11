@@ -7,21 +7,26 @@ class KenKenDesignerController < UIViewController
 
     @solveButton = UIButton.buttonWithType(UIButtonTypeRoundedRect)
     @solveButton.setTitle("Solve", forState:UIControlStateNormal)
-    @solveButton.addTarget(self, action:"solve_puzzle", forControlEvents:UIControlEventTouchUpInside)
+    @solveButton.addTarget(self, action: "solvePuzzle", forControlEvents:UIControlEventTouchUpInside)
+
+    @resetButton = UIButton.buttonWithType(UIButtonTypeRoundedRect)
+    @resetButton.setTitle("Reset", forState:UIControlStateNormal)
+    @resetButton.addTarget(self, action:"resetPuzzle", forControlEvents:UIControlEventTouchUpInside)
 
     # No idea how to make this work right. I want it centered horizontally
 
     Motion::Layout.new do |layout|
       layout.view view
-      layout.subviews "grid" => @gridView, "solve" => @solveButton
+      layout.subviews "grid" => @gridView, "solve" => @solveButton, "reset" => @resetButton
       layout.metrics "top" => 45, "margin" => (view.frame.width - @gridView.frame.width)/2, "height" => @gridView.frame.height, "width" => @gridView.frame.width
-      layout.vertical "|-(top)-[grid(==height)]-[solve]"
+      layout.vertical "|-(top)-[grid(==height)]-[solve]-[reset]"
       layout.horizontal "|-(margin)-[grid(==width)]"
       layout.horizontal "|-(margin)-[solve(==grid)]"
+      layout.horizontal "|-(margin)-[reset(==grid)]"
     end
   end
   
-  def solve_puzzle
+  def solvePuzzle
     puts "Sovling puzzle"
 
     start = Time.now
@@ -36,5 +41,9 @@ class KenKenDesignerController < UIViewController
     else
       puts "Could not solve :("
     end
+  end
+
+  def resetPuzzle
+    @gridView.reset
   end
 end
