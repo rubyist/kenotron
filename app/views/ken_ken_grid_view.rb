@@ -104,14 +104,20 @@ class KenKenGridView < UIView
       @popover.delegate = self
       @popover.presentPopoverFromRect(@touchedCells.last.frame, inView:self, permittedArrowDirections:UIPopoverArrowDirectionAny, animated:true)
     end
-    
-
-    # TODO: Invalidate any cages we're drawing over with this cage
   end
   
   def setNumberOperation(number, operation)
     @popover.dismissPopoverAnimated(true)
-    
+
+    # Bust any cages we drew over
+    touchedCellIndices = @touchedCells.map(&:cellIndex)
+    bustedCages = @cages.select {|cage| cage.cells.any? {|cell| touchedCellIndices.include?(cell.cellIndex) } }
+    bustedCages.each do |cage|
+      cage.cells.each(&:reset)
+      @cages.delete(cage)
+    end
+
+    # Draw target/op in northwest cell
     northwestCell = northwestCellOfCage(@touchedCells)
     if operation == "="
       northwestCell.set_num_op("#{number}")
