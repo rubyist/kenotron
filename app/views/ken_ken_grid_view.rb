@@ -11,7 +11,7 @@ class KenKenGridView < UIView
     gridHeight = gridWidth
 
     self.initWithFrame(CGRect.make(x:0, y:0, width:gridWidth, height:gridHeight))
-    self.backgroundColor = '#dddbba'.to_color
+    self.backgroundColor = '#AFB5BC'.to_color
 
     @size = size
     @cells = {}
@@ -48,7 +48,7 @@ class KenKenGridView < UIView
     context = UIGraphicsGetCurrentContext()
     CGContextSaveGState(context)
 
-    CGContextSetStrokeColorWithColor(context, '#eaafa3'.to_color.CGColor)
+    CGContextSetStrokeColorWithColor(context, '#BE757E'.to_color.CGColor)
     CGContextSetLineWidth(context, 8.0)
 
 

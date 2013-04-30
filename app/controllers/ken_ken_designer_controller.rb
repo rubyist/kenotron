@@ -1,15 +1,19 @@
 class KenKenDesignerController < UIViewController
   def viewDidLoad
     super
-    self.view.backgroundColor = UIColor.whiteColor
+    self.view.backgroundColor = '#525A6C'.to_color
     
-    @gridView = KenKenGridView.alloc.initWithGridSize(4)
+    @gridView = KenKenGridView.alloc.initWithGridSize(6)
 
-    @solveButton = UIButton.buttonWithType(UIButtonTypeRoundedRect)
+    @solveButton = UIButton.buttonWithType(UIButtonTypeCustom)
+    @solveButton.backgroundColor = '#76AEDC'.to_color
+    @solveButton.setTitleColor('#393939'.to_color, forState:UIControlStateNormal)
     @solveButton.setTitle("Solve", forState:UIControlStateNormal)
     @solveButton.addTarget(self, action: "solvePuzzle", forControlEvents:UIControlEventTouchUpInside)
 
-    @resetButton = UIButton.buttonWithType(UIButtonTypeRoundedRect)
+    @resetButton = UIButton.buttonWithType(UIButtonTypeCustom)
+    @resetButton.backgroundColor = '#BE757E'.to_color
+    @resetButton.setTitleColor('#393939'.to_color, forState:UIControlStateNormal)
     @resetButton.setTitle("Reset", forState:UIControlStateNormal)
     @resetButton.addTarget(self, action:"resetPuzzle", forControlEvents:UIControlEventTouchUpInside)
 
@@ -19,7 +23,7 @@ class KenKenDesignerController < UIViewController
       layout.view view
       layout.subviews "grid" => @gridView, "solve" => @solveButton, "reset" => @resetButton
       layout.metrics "top" => 45, "margin" => (view.frame.width - @gridView.frame.width)/2, "height" => @gridView.frame.height, "width" => @gridView.frame.width
-      layout.vertical "|-(top)-[grid(==height)]-[solve]-[reset]"
+      layout.vertical "|-(top)-[grid(==height)]-[solve(==60)]-[reset(==60)]"
       layout.horizontal "|-(margin)-[grid(==width)]"
       layout.horizontal "|-(margin)-[solve(==grid)]"
       layout.horizontal "|-(margin)-[reset(==grid)]"
