@@ -3,8 +3,6 @@ class KenKenCellView < UIView
   attr_accessor :cellIndex
 
   BorderSize      = 4.0
-  DeselectedColor = '#A1A7B3'.to_color
-  SelectedColor   = '#d1c662'.to_color
 
   def initWithFrame(frame)
     super
@@ -19,7 +17,7 @@ class KenKenCellView < UIView
     @numOpLabel = UILabel.alloc.initWithFrame(CGRect.make(x: 7, y: 8, width: 60, height: 14))
     @numOpLabel.font = lato18
     @numOpLabel.text = ""
-    @numOpLabel.textColor = '#6B7283'.to_color
+    @numOpLabel.textColor = KenotronConstants::LightTextColor
     @numOpLabel.backgroundColor = UIColor.clearColor
     self.addSubview(@numOpLabel)
 
@@ -28,7 +26,7 @@ class KenKenCellView < UIView
     @numberLabel = UILabel.alloc.initWithFrame(CGRect.make(x:36, y:30, width: 40, height: 50))
     @numberLabel.font = lato36
     @numberLabel.text = ""
-    @numberLabel.textColor = "#393939".to_color
+    @numberLabel.textColor = KenotronConstants::TextColor
     @numberLabel.backgroundColor = UIColor.clearColor
     self.addSubview(@numberLabel)
 
@@ -44,9 +42,9 @@ class KenKenCellView < UIView
     CGContextSaveGState(context)
 
     if @selected
-      CGContextSetFillColorWithColor(context, SelectedColor.CGColor)
+      CGContextSetFillColorWithColor(context, KenotronConstants::CellSelectedColor.CGColor)
     else
-      CGContextSetFillColorWithColor(context, DeselectedColor.CGColor)
+      CGContextSetFillColorWithColor(context, KenotronConstants::CellDeselectedColor.CGColor)
     end
 
     CGContextFillRect(context, CGRect.make(x:BorderSize, y:BorderSize, width:cellWidth, height:cellheight))

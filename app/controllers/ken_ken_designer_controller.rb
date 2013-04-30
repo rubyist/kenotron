@@ -1,19 +1,19 @@
 class KenKenDesignerController < UIViewController
   def viewDidLoad
     super
-    self.view.backgroundColor = '#525A6C'.to_color
+    self.view.backgroundColor = KenotronConstants::BackgroundColor
     
     @gridView = KenKenGridView.alloc.initWithGridSize(6)
 
     @solveButton = UIButton.buttonWithType(UIButtonTypeCustom)
-    @solveButton.backgroundColor = '#76AEDC'.to_color
-    @solveButton.setTitleColor('#393939'.to_color, forState:UIControlStateNormal)
+    @solveButton.backgroundColor = KenotronConstants::ButtonColor
+    @solveButton.setTitleColor(KenotronConstants::TextColor, forState:UIControlStateNormal)
     @solveButton.setTitle("Solve", forState:UIControlStateNormal)
     @solveButton.addTarget(self, action: "solvePuzzle", forControlEvents:UIControlEventTouchUpInside)
 
     @resetButton = UIButton.buttonWithType(UIButtonTypeCustom)
-    @resetButton.backgroundColor = '#BE757E'.to_color
-    @resetButton.setTitleColor('#393939'.to_color, forState:UIControlStateNormal)
+    @resetButton.backgroundColor = KenotronConstants::ResetButtonColor
+    @resetButton.setTitleColor(KenotronConstants::TextColor, forState:UIControlStateNormal)
     @resetButton.setTitle("Reset", forState:UIControlStateNormal)
     @resetButton.addTarget(self, action:"resetPuzzle", forControlEvents:UIControlEventTouchUpInside)
 
