@@ -5,9 +5,9 @@ class KenKenGridView < UIView
   
   def initWithGridSize(size)
     cellWidth = 648.0 / size # 648 = max usable space in portrait with 40 margins
-    cellWidth = [cellWidth, 72.0, 98.0].sort[1] # Clamp cell width between 72 and 80
+    #cellWidth = [cellWidth, 72.0, 98.0].sort[1] # Clamp cell width between 72 and 80
 
-    gridWidth = (cellWidth * size) + 8  # Cells plus borders
+    gridWidth = 656 #(cellWidth * size) + 8  # Cells plus borders
     gridHeight = gridWidth
 
     self.initWithFrame(CGRect.make(x:0, y:0, width:gridWidth, height:gridHeight))

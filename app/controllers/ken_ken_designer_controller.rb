@@ -7,7 +7,9 @@ class KenKenDesignerController < UIViewController
   def viewDidLoad
     super
     self.view.backgroundColor = KenotronConstants::BackgroundColor
-    
+
+    lato36 = UIFont.fontWithName("Lato", size: 36)
+
     @gridView = KenKenGridView.alloc.initWithGridSize(@size)
 
     @solveButton = UIButton.buttonWithType(UIButtonTypeCustom)
@@ -15,18 +17,21 @@ class KenKenDesignerController < UIViewController
     @solveButton.setTitleColor(KenotronConstants::TextColor, forState:UIControlStateNormal)
     @solveButton.setTitle("Solve", forState:UIControlStateNormal)
     @solveButton.addTarget(self, action: "solvePuzzle", forControlEvents:UIControlEventTouchUpInside)
+    @solveButton.titleLabel.font = lato36
 
     @resetButton = UIButton.buttonWithType(UIButtonTypeCustom)
     @resetButton.backgroundColor = KenotronConstants::ResetButtonColor
     @resetButton.setTitleColor(KenotronConstants::TextColor, forState:UIControlStateNormal)
     @resetButton.setTitle("Reset", forState:UIControlStateNormal)
     @resetButton.addTarget(self, action:"resetPuzzle", forControlEvents:UIControlEventTouchUpInside)
+    @resetButton.titleLabel.font = lato36
 
     @homeButton = UIButton.buttonWithType(UIButtonTypeCustom)
     @homeButton.backgroundColor = KenotronConstants::HomeButtonColor
     @homeButton.setTitleColor(KenotronConstants::TextColor, forState:UIControlStateNormal)
     @homeButton.setTitle("New Puzzle", forState:UIControlStateNormal)
     @homeButton.addTarget(self, action:"home", forControlEvents:UIControlEventTouchUpInside)
+    @homeButton.titleLabel.font = lato36
 
     # No idea how to make this work right. I want it centered horizontally
 

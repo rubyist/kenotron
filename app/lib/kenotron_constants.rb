@@ -5,7 +5,7 @@ module KenotronConstants
   SelectTextColor = '#383844'.to_color
 
   CellDeselectedColor = '#A1A7B3'.to_color
-  CellSelectedColor   = '#d1c662'.to_color
+  CellSelectedColor   = '#53c296'.to_color
 
   GridHighlightColor = '#BE757E'.to_color
   GridOutlineColor = '#AFB5BC'.to_color

@@ -31,7 +31,6 @@ class SelectPuzzleController < UIViewController
       button.setTitleColor(KenotronConstants::SelectTextColor, forState:UIControlStateNormal)
       button.titleLabel.font = lato72
       button.when(UIControlEventTouchUpInside) do
-        puts "Firing up a puzzle of #{puzzle[:cells]}"
         @designerController = KenKenDesignerController.alloc.initWithGridSize(puzzle[:cells])
         self.presentViewController(@designerController, animated:true, completion:nil)
       end
