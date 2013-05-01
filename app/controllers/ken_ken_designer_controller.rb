@@ -1,9 +1,14 @@
 class KenKenDesignerController < UIViewController
+  def initWithGridSize(size)
+    @size = size.to_i
+    self.initWithNibName(nil, bundle:nil)
+  end
+
   def viewDidLoad
     super
     self.view.backgroundColor = KenotronConstants::BackgroundColor
     
-    @gridView = KenKenGridView.alloc.initWithGridSize(6)
+    @gridView = KenKenGridView.alloc.initWithGridSize(@size)
 
     @solveButton = UIButton.buttonWithType(UIButtonTypeCustom)
     @solveButton.backgroundColor = KenotronConstants::ButtonColor
@@ -17,16 +22,23 @@ class KenKenDesignerController < UIViewController
     @resetButton.setTitle("Reset", forState:UIControlStateNormal)
     @resetButton.addTarget(self, action:"resetPuzzle", forControlEvents:UIControlEventTouchUpInside)
 
+    @homeButton = UIButton.buttonWithType(UIButtonTypeCustom)
+    @homeButton.backgroundColor = KenotronConstants::HomeButtonColor
+    @homeButton.setTitleColor(KenotronConstants::TextColor, forState:UIControlStateNormal)
+    @homeButton.setTitle("New Puzzle", forState:UIControlStateNormal)
+    @homeButton.addTarget(self, action:"home", forControlEvents:UIControlEventTouchUpInside)
+
     # No idea how to make this work right. I want it centered horizontally
 
     Motion::Layout.new do |layout|
       layout.view view
-      layout.subviews "grid" => @gridView, "solve" => @solveButton, "reset" => @resetButton
+      layout.subviews "grid" => @gridView, "solve" => @solveButton, "reset" => @resetButton, "home" => @homeButton
       layout.metrics "top" => 45, "margin" => (view.frame.width - @gridView.frame.width)/2, "height" => @gridView.frame.height, "width" => @gridView.frame.width
-      layout.vertical "|-(top)-[grid(==height)]-[solve(==60)]-[reset(==60)]"
+      layout.vertical "|-(top)-[grid(==height)]-[solve(==60)]-[reset(==60)]-[home(==60)]"
       layout.horizontal "|-(margin)-[grid(==width)]"
       layout.horizontal "|-(margin)-[solve(==grid)]"
       layout.horizontal "|-(margin)-[reset(==grid)]"
+      layout.horizontal "|-(margin)-[home(==grid)]"
     end
   end
   
@@ -49,5 +61,9 @@ class KenKenDesignerController < UIViewController
 
   def resetPuzzle
     @gridView.reset
+  end
+
+  def home
+    self.dismissViewControllerAnimated(true, completion:nil)
   end
 end
