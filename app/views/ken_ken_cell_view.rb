@@ -21,13 +21,19 @@ class KenKenCellView < UIView
     @numOpLabel.backgroundColor = UIColor.clearColor
     self.addSubview(@numOpLabel)
 
-    lato36 = UIFont.fontWithName("Lato", size: 36)
+    if self.frame.width > 108 # less than 6x6
+      numberFont = UIFont.fontWithName("Lato", size:48)
+    else
+      numberFont = UIFont.fontWithName("Lato", size:36)
+    end
 
-    @numberLabel = UILabel.alloc.initWithFrame(CGRect.make(x:36, y:30, width: 40, height: 50))
-    @numberLabel.font = lato36
+    @numberLabel = UILabel.alloc.initWithFrame(CGRect.make(x:0, y:0, width: self.frame.width, height: self.frame.height))
+    @numberLabel.font = numberFont
     @numberLabel.text = ""
     @numberLabel.textColor = KenotronConstants::TextColor
     @numberLabel.backgroundColor = UIColor.clearColor
+    @numberLabel.textAlignment = NSTextAlignmentCenter
+    @numberLabel.adjustsFontSizeToFitWidth = true
     self.addSubview(@numberLabel)
 
 
